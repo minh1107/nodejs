@@ -1,34 +1,36 @@
-const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const model = require("../model/auth");
 
-const user = {
-  username: "user1",
-  password: "$2a$10$Qvg6GCYl6e4Fdzr8u4/cbO3N0GeR/3k3g3h9xU7khy/dObWVpte4u", // bcrypt hash of the password 'password'
-};
+exports.login = async (req, res) => {
+  const { phoneNumber, password } = req.body;
+  const resultLogin = await model.login(phoneNumber, password);
 
-exports.login = (req, res) => {
-  const { username, password } = req.body;
-
-  if (username === user.username && bcrypt.compareSync(password, user.password)) {
-    const token = jwt.sign({ username: user.username }, "secret", { expiresIn: "1h" });
-    res.json({ token });
-  } else {
-    res.status(401).json({ message: "Invalid username or password" });
+  if (resultLogin.errCode === 1) {
+    res.send("User not found");
+  } else if (resultLogin.errCode === 2) {
+    res.send("Wrong password");
   }
+  return res.status(200).json({
+    status: 200,
+    phoneNumber: resultLogin.phonenumber,
+    role: resultLogin.role,
+    fullName: resultLogin.fullname,
+  });
 };
 
 exports.register = async (req, res) => {
-  const { fullName, phoneNumber, password } = req.query;
-  const hashedPassword = bcrypt.hashSync(password, 10);
-  const hashedPhoneNumber = bcrypt.hashSync(phoneNumber, 10);
-  console.log(fullName)
   try {
-    const resultRegister = await model.register(fullName, hashedPhoneNumber, hashedPassword);
-    res.status(201).json({ message: "User registered successfully", resultRegister });
-    res.send("ggg");
+    const { fullName, phoneNumber, password } = req.body;
+    if (!fullName) {
+      res.status(404).json({ message: "FullName is not null" });
+    }
+    const hashedPassword = bcrypt.hashSync(password, 10);
+    await model.register(fullName, phoneNumber, hashedPassword);
+    await res.status(201).json({ message: "User registered successfully" });
   } catch (error) {
-    res.status(500).json({ message: "Error registering user" });
+    res.status(500).json({
+      errCode: 0,
+      message: "Error registering user",
+    });
   }
-console.log(req)
 };
