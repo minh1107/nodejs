@@ -21,6 +21,11 @@ const innitRouter = (app) =>{
 
   //export 
   router.get("/export", controller.exportExcel)
+
+  //view 
+  router.get("/view", controller.viewSchool)
+
+  
   
   return app.use("/", router);
 }

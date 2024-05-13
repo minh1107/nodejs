@@ -37,8 +37,7 @@ const modelUpdate = async (nameSchool, ageSchool, methodStudy, minNumber, descri
      UPDATE listSchool
      SET nameschool = $1, ageschool = $2, methodStudy = $3, minNumber = $4, description = $5,
      subject= $6
-     WHERE id = $7
-      `;
+     WHERE id = $7 `;
     const values = [
       nameSchool, ageSchool, methodStudy, minNumber, description, subject,
       id
@@ -57,8 +56,20 @@ const exportExcel = async()=>{
    return result 
 }
 
+const  viewSchool = async (id) =>{
+try {
+  console.log(id)
+  const query = `select * from listSchool where id = $1`
+  const result = await db.query(query,[id]);
+  return result.rows
+} catch (error) {
+  console.log(error)
+}
+}
+
 module.exports = {
   modelListSchool,
   modelUpdate,
-  exportExcel
+  exportExcel,
+  viewSchool
 };

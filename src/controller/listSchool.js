@@ -54,35 +54,13 @@ exports.exportExcel = async (req, res) => {
 
 }
 
-// create table listSchool(
-// 	id serial primary key,
-// 	nameSchool varchar(255),
-// 	ageSchool varchar(255),
-// 	statusSchool int default 2,
-// 	declarationDate varchar(2000),
-// 	numberSchool int,
-// 	user_id int REFERENCES users(id) 
-// )
-
-// insert into listSchool(
-// 	nameSchool ,
-// 	ageSchool ,
-// 	declarationDate ,
-// 	numberSchool,
-// 	user_id 
-// )
-// values(
-// 'lớp học code',
-// 	'lớp 12',
-// 	'13/4/2024',
-// 	26,
-// 	11
-// )
-
-
-// ALTER TABLE listSchool
-// ADD COLUMN methodStudy VARCHAR(255),
-// ADD COLUMN minNumber VARCHAR(255),
-// ADD COLUMN description VARCHAR(255),
-// ADD COLUMN description VARCHAR(255),
-// ADD COLUMN subject VARCHAR(255)
+exports.viewSchool = async (req, res) => {
+  const { id } = req.body;
+  const result = await model.viewSchool(id);
+  
+  res.status(200).json({
+    status: 200,
+    message: "success",
+    ...result
+  })
+}
