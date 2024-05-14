@@ -1,29 +1,48 @@
 const express = require('express');
 const router = express.Router();
-const homeController = require('../controller/home');
-const authController  = require('../controller/authController')
-const controller = require('../controller/listSchool')
+const { getHomePage } = require('../controller/home');
+const { login, register } = require('../controller/authController');
+const { listSchool, update, exportExcel, viewSchool,postSchool,addTeacher } = require('../controller/listSchool');
+const { listStudent,viewStudent } = require('../controller/listStudent');
+const { listTeacher,viewTeacher } = require('../controller/listTeacher');
 
 const innitRouter = (app) =>{
   
-  router.get('/', homeController.getHomePage);
+  router.get('/', getHomePage);
 
   //login
-  router.post('/login', authController.login);
+  router.post('/login', login);
 
   // sign up
-  router.post('/register', authController.register);
+  router.post('/register', register);
 
   //listSchool
-  router.get("/listSchool",controller.listChool)
+  router.get("/listSchool",listSchool)
+  //post 
+  router.post("/postSchool",postSchool)
   //update
-  router.put("/updateSchool", controller.update);
-
+  router.put("/updateSchool", update);
   //export 
-  router.get("/export", controller.exportExcel)
-
+  router.get("/export", exportExcel)
   //view 
-  router.get("/view", controller.viewSchool)
+  router.get("/view", viewSchool)
+  //addTeacher for listSchool
+  router.post("/addTeacher",addTeacher)
+  
+
+//------//
+// studentmanagement
+router.get('/listStudent', listStudent)
+//view
+router.get('/viewStudent',viewStudent)
+
+//-----//
+router.get('/listTeacher',listTeacher)
+//view 
+router.get("/viewInfoTeacher",viewTeacher)
+
+
+
 
   
   
