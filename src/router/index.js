@@ -17,7 +17,7 @@ const innitRouter = (app) =>{
   router.post('/register', register);
 
   //listSchool
-  router.get("/listSchool",listSchool)
+  router.post("/listSchool",listSchool)
   //post 
   router.post("/postSchool",postSchool)
   //update
