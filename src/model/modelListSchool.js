@@ -7,6 +7,7 @@ const modelListSchool = async params => {
     let totalQuery = `SELECT COUNT(*) AS total FROM listSchool`;
 
     let query = `SELECT
+    listSchool.id,
       listSchool.nameSchool,
       listSchool.ageSchool,
       listSchool.statusSchool,
@@ -132,7 +133,11 @@ const deleteTeacher = async id => {
 };
 
 const postSchool = ()=> {
-
+try {
+  
+} catch (error) {
+  
+}
 }
 
 module.exports = {
