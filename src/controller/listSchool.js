@@ -95,9 +95,12 @@ exports.postSchool = async (req, res) => {
 
 exports.addTeacher = async(req, res) =>{
   try {
-    const {id} = req.body
-    const result = await model.addTeacher(id);
-    console.log(result)
+    const result = await model.addTeacher(req.body);
+     res.status(200).json({
+      status: 200,
+      message: "success",
+      data: result,
+    });
   } catch (error) {
     res.status(500).json({
       status: 500,
@@ -105,4 +108,21 @@ exports.addTeacher = async(req, res) =>{
     });
   }
 
+}
+
+exports.deleteTeacher= async(req,res)=>{
+  try {
+    const {teacher_id} = req.query
+    const result = await model.deleteTeacher(teacher_id)
+    res.status(200).json({
+      status: 200,
+      message: "success",
+      data: result.rows,
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: 500,
+      message: "error",
+    });
+  }
 }

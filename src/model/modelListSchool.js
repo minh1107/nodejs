@@ -5,7 +5,7 @@ const modelListSchool = async params => {
     const { page = 1, pageSize = 20 } = params;
 
     let totalQuery = `SELECT COUNT(*) AS total FROM listSchool`;
-    
+
     let query = `SELECT
       listSchool.nameSchool,
       listSchool.ageSchool,
@@ -56,7 +56,6 @@ const modelListSchool = async params => {
   }
 };
 
-
 const modelUpdate = async (nameSchool, ageSchool, methodStudy, minNumber, description, subject, id) => {
   try {
     const query = `
@@ -78,38 +77,65 @@ const exportExcel = async () => {
   return result;
 };
 
-const viewSchool = async (id) => {
+const viewSchool = async id => {
   try {
     const query = `select * from listSchool where id = $1`;
-    const queryTeacher = `select * from teacher where listSchool_id = $1`;
+    const queryTeacher = `select * from listSchool_teacher
+    join teacher on teacher.listSchool_id = teacher.listSchool_id
+    where teacher.listSchool_id = $1`;
     const queryStudent = `select * from studentManagement where listSchool_id = $1`;
     const result = await db.query(query, [id]);
     const resultTeacher = await db.query(queryTeacher, [id]);
     const resultStudent = await db.query(queryStudent, [id]);
     return {
-      info :result.rows[0],
-      teacher: resultTeacher.rows,
-      student:resultStudent.rows
+      info: {
+        data: result.rows[0],
+        teacher: resultTeacher.rows,
+        student: resultStudent.rows,
+      },
     };
-
   } catch (error) {
-    return error
-
+    return error;
   }
 };
 
-const addTeacher = (id)=>{
+const addTeacher = async body => {
   try {
-    
+    const { teacher_id, listSchool_id, endDate, startDate, role } = body;
+    const queryListSchool_teacher = await `select * from listSchool_teacher 
+    where teacher_id = $1
+    `;
+    const resultqueryListSchool_teacher = await db.query(queryListSchool_teacher, [teacher_id]);
+    if (resultqueryListSchool_teacher?.rows?.length > 0) {
+      return { errorCode: 1, messenger: "teacher was in class" };
+    } else {
+      const query =
+        await "INSERT INTO listSchool_teacher (teacher_id, listSchool_id, endDate,startDate,role) VALUES ($1, $2, $3, $4, $5)";
+      const values = [teacher_id, listSchool_id, endDate, startDate, role];
+
+      const resultqueryQueryInsert = await db.query(query, values);
+      return resultqueryQueryInsert.rows;
+    }
+  } catch (error) {
+    return error;
+  }
+};
+
+const deleteTeacher = async id => {
+  try {
+      const query = `delete from listSchool_teacher where teacher_id = ${id}`
+      const resultqueryQueryInsert = await db.query(query);
+      return resultqueryQueryInsert
   } catch (error) {
     return error
   }
-}
+};
 
 module.exports = {
   modelListSchool,
   modelUpdate,
   exportExcel,
   viewSchool,
-  addTeacher
+  addTeacher,
+  deleteTeacher,
 };

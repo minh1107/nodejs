@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { getHomePage } = require('../controller/home');
 const { login, register } = require('../controller/authController');
-const { listSchool, update, exportExcel, viewSchool,postSchool,addTeacher } = require('../controller/listSchool');
+const { listSchool, update, exportExcel, viewSchool,postSchool,addTeacher,deleteTeacher } = require('../controller/listSchool');
 const { listStudent,viewStudent } = require('../controller/listStudent');
 const { listTeacher,viewTeacher } = require('../controller/listTeacher');
 
@@ -41,7 +41,10 @@ router.get('/listTeacher',listTeacher)
 //view 
 router.get("/viewInfoTeacher",viewTeacher)
 
+//addteacher
 router.post("/addTeacher",addTeacher)
+//delete
+router.delete("/deletTeacher",deleteTeacher)
 
 
 
