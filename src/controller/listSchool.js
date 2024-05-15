@@ -28,16 +28,19 @@ exports.exportExcel = async (req, res) => {
 
   worksheet.columns = [
     { header: "Id", key: "id", width: 10 },
-    { header: "School Name", key: "nameschool", width: 32 },
-    { header: "Age School", key: "ageschool", width: 15 },
-    { header: "Status School", key: "statusschool", width: 15 },
-    { header: "Declaration Date", key: "declarationdate", width: 15 },
-    { header: "Number School", key: "numberschool", width: 15 },
-    { header: "User Id", key: "user_id", width: 15 },
-    { header: "Method Study", key: "methodstudy", width: 15 },
-    { header: "Min Number", key: "minnumber", width: 15 },
-    { header: "Description", key: "description", width: 32 },
-    { header: "Subject", key: "subject", width: 32 },
+  { header: "School Name", key: "nameschool", width: 32 },
+  { header: "Age School", key: "ageschool", width: 15 },
+  { header: "Status School", key: "statusschool", width: 15 },
+  { header: "Declaration Date", key: "declarationdate", width: 15 },
+  { header: "Number School", key: "numberschool", width: 15 },
+  { header: "Method Study", key: "methodstudy", width: 15 },
+  { header: "Min Number", key: "minnumber", width: 15 },
+  { header: "Description", key: "description", width: 32 },
+  { header: "Subject", key: "subject", width: 32 },
+  { header: "Max Number", key: "maxnumber", width: 15 },
+  { header: "Time Minute", key: "timeminute", width: 15 },
+  { header: "Price", key: "price", width: 15 },
+  { header: "Study Time", key: "studytime", width: 32 }
   ];
 
   const resultExcel = await model.exportExcel();
@@ -54,6 +57,7 @@ exports.exportExcel = async (req, res) => {
 
 exports.viewSchool = async (req, res) => {
   const { id } = req.query;
+ 
   const result = await model.viewSchool(id);
 
   res.status(200).json({

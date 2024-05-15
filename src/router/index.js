@@ -27,7 +27,6 @@ const innitRouter = (app) =>{
   //view 
   router.get("/view", viewSchool)
   //addTeacher for listSchool
-  router.post("/addTeacher",addTeacher)
   
 
 //------//
@@ -37,9 +36,13 @@ router.get('/listStudent', listStudent)
 router.get('/viewStudent',viewStudent)
 
 //-----//
+//teacher
 router.get('/listTeacher',listTeacher)
 //view 
 router.get("/viewInfoTeacher",viewTeacher)
+
+router.post("/addTeacher",addTeacher)
+
 
 
 
