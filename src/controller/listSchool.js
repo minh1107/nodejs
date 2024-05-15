@@ -70,11 +70,19 @@ exports.viewSchool = async (req, res) => {
 exports.postSchool = async (req, res) => {
   try {
     const result = await model.postSchool(req.body);
+   if(result?.rows.length >=0){
      res.status(200).json({
        status: 200,
        message: "success",
        data: result.rows,
      });
+   } else{
+    res.status(404).json({
+      status: 404,
+      message: "error",
+      data: result,
+    });
+   }
   } catch (error) {
     res.status(500).json({
       status: 500,
