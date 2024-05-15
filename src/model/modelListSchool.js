@@ -7,7 +7,7 @@ const modelListSchool = async params => {
     let totalQuery = `SELECT COUNT(*) AS total FROM listSchool`;
 
     let query = `SELECT
-    listSchool.id,
+     listSchool.id,
       listSchool.nameSchool,
       listSchool.ageSchool,
       listSchool.statusSchool,
@@ -124,21 +124,52 @@ const addTeacher = async body => {
 
 const deleteTeacher = async id => {
   try {
-      const query = `delete from listSchool_teacher where teacher_id = ${id}`
-      const resultqueryQueryInsert = await db.query(query);
-      return resultqueryQueryInsert
+    const query = `delete from listSchool_teacher where teacher_id = ${id}`;
+    const resultqueryQueryInsert = await db.query(query);
+    return resultqueryQueryInsert;
   } catch (error) {
-    return error
+    return error;
   }
 };
 
-const postSchool = ()=> {
-try {
-  
-} catch (error) {
-  
-}
-}
+const postSchool = async body => {
+  try {
+    const {
+      nameSchool,
+      subject,
+      methodStudy,
+      ageSchool,
+      numberSchool,
+      timeMinute,
+      studyTime,
+      declarationDate,
+      minNumber,
+      maxNumber,
+      description,
+      price
+    } = body;
+    const query = `insert into listSchool(nameSchool,subject,methodStudy,ageSchool,numberSchool,timeMinute,studyTime,declarationDate,minNumber,maxNumber,description,price)
+values($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)
+`;
+    const values = [
+      nameSchool,
+      subject,
+      methodStudy,
+      ageSchool,
+      numberSchool,
+      timeMinute,
+      studyTime,
+      declarationDate,
+      minNumber,
+      maxNumber,
+      description,
+      price
+    ];
+    const resultqueryQueryInsert = await db.query(query, values);
+    console.log(resultqueryQueryInsert)
+    return resultqueryQueryInsert.rows;
+  } catch (error) {}
+};
 
 module.exports = {
   modelListSchool,
@@ -147,5 +178,5 @@ module.exports = {
   viewSchool,
   addTeacher,
   deleteTeacher,
-  postSchool
+  postSchool,
 };
