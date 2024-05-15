@@ -131,6 +131,10 @@ const deleteTeacher = async id => {
   }
 };
 
+const postSchool = ()=> {
+
+}
+
 module.exports = {
   modelListSchool,
   modelUpdate,
@@ -138,4 +142,5 @@ module.exports = {
   viewSchool,
   addTeacher,
   deleteTeacher,
+  postSchool
 };

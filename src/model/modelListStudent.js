@@ -1,8 +1,8 @@
 const db = require("../db");
 
-const listStudent = async (params) => {
+const listStudent = async params => {
   try {
-    let query = `SELECT name,nameschool,status,studentstudy,price,declarationdate
+    let query = `SELECT name,nameschool,status,studentstudy,price,declarationdate,numberSchool
     FROM studentManagement JOIN listSchool ON studentManagement.listSchool_id = listSchool.id`;
     const { page = 1, pageSize = 20 } = params;
     let totalQuery = `SELECT COUNT(*) FROM studentManagement JOIN listSchool ON studentManagement.listSchool_id = listSchool.id`;
@@ -28,7 +28,7 @@ const listStudent = async (params) => {
   } catch (error) {}
 };
 
-const viewStudent = async (id)=> {
+const viewStudent = async id => {
   try {
     const query = `select * from studentManagement
     join listSchool ON studentManagement.listSchool_id = listSchool.id
@@ -40,7 +40,20 @@ const viewStudent = async (id)=> {
     return error;
   }
 };
+
+const exportss = async () => {
+  try {
+    const query = `SELECT name,nameschool,status,studentstudy,price,declarationdate,numberSchool 
+  FROM studentManagement JOIN listSchool ON studentManagement.listSchool_id = listSchool.id`;
+    const result = await db.query(query);
+    return result.rows;
+  } catch (error) {
+    return error;
+  }
+};
+
 module.exports = {
   listStudent,
   viewStudent,
+  exportss,
 };

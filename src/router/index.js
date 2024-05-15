@@ -3,7 +3,7 @@ const router = express.Router();
 const { getHomePage } = require('../controller/home');
 const { login, register } = require('../controller/authController');
 const { listSchool, update, exportExcel, viewSchool,postSchool,addTeacher,deleteTeacher } = require('../controller/listSchool');
-const { listStudent,viewStudent } = require('../controller/listStudent');
+const { listStudent,viewStudent ,expostStudent} = require('../controller/listStudent');
 const { listTeacher,viewTeacher } = require('../controller/listTeacher');
 
 const innitRouter = (app) =>{
@@ -34,6 +34,8 @@ const innitRouter = (app) =>{
 router.get('/listStudent', listStudent)
 //view
 router.get('/viewStudent',viewStudent)
+//export
+router.get("/exportStudent",expostStudent)
 
 //-----//
 //teacher
