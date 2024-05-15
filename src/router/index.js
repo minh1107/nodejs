@@ -5,7 +5,7 @@ const { login, register } = require('../controller/authController');
 const { listSchool, update, exportExcel, viewSchool,postSchool,addTeacher,deleteTeacher } = require('../controller/listSchool');
 const { listStudent,viewStudent ,expostStudent} = require('../controller/listStudent');
 const { listTeacher,viewTeacher } = require('../controller/listTeacher');
-const { workTable } = require('../controller/wordTable');
+const { workTable,exportssWork } = require('../controller/workTable');
 
 const innitRouter = (app) =>{
   
@@ -52,6 +52,8 @@ router.delete("/deletTeacher",deleteTeacher)
 
 //work table
 router.get('/worktable',workTable)
+//export
+router.get("/exportwork", exportssWork)
 
 
 
