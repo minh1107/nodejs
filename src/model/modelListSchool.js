@@ -24,7 +24,9 @@ const modelListSchool = async params => {
         studentManagement
       GROUP BY
         listSchool_id
-    ) AS counts ON listSchool.id = counts.listSchool_id`;
+    ) AS counts ON listSchool.id = counts.listSchool_id
+      ORDER BY listSchool.id ASC
+    `;
 
     const conditions = [];
     if (params.statusSchool) {
@@ -148,8 +150,10 @@ const postSchool = async body => {
       description,
       price
     } = body;
+
+    console.log(body)
     const query = `insert into listSchool(nameSchool,subject,methodStudy,ageSchool,numberSchool,timeMinute,studyTime,declarationDate,minNumber,maxNumber,description,price)
-values($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)
+    values($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)
 `;
     const values = [
       nameSchool,
@@ -166,8 +170,11 @@ values($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)
       price
     ];
     const resultqueryQueryInsert = await db.query(query, values);
+    console.log(resultqueryQueryInsert)
     return resultqueryQueryInsert;
-  } catch (error) {}
+  } catch (error) {
+    console.log(error)
+  }
 };
 
 module.exports = {
