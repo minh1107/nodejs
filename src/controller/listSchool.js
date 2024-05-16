@@ -48,9 +48,10 @@ exports.exportExcel = async (req, res) => {
     worksheet.addRow(item);
   });
   const buffer = await workbook.xlsx.writeBuffer();
-
-  res.setHeader("Content-Type", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-  res.setHeader("Content-Disposition", "attachment; filename=MySheet.xlsx");
+  
+  res.setHeader('Access-Control-Expose-Headers', "Content-Disposition"); //IMPORTANT FOR React.js content-disposition get Name
+  res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+  res.setHeader("Content-Disposition", "attachment; filename=" + 'fileNameExcel'+".xlsx");
 
   res.send(buffer);
 };
