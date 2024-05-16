@@ -52,6 +52,7 @@ const exportss = async () => {
   }
 };
 
+
 module.exports = {
   listStudent,
   viewStudent,
